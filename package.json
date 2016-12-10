@@ -1,5 +1,5 @@
 {
-  "name": "nodex-aaa-login-mfa-duo",
+  "name": "nodex-login-mfa-duo",
   "version": "0.0.0",
   "description": "",
   "author": {
@@ -9,10 +9,10 @@
   },
   "repository": {
     "type": "git",
-    "url": "git://github.com/authnomicon/nodex-aaa-login-mfa-duo.git"
+    "url": "git://github.com/authnomicon/nodex-login-mfa-duo.git"
   },
   "bugs": {
-    "url": "http://github.com/authnomicon/nodex-aaa-login-mfa-duo/issues"
+    "url": "http://github.com/authnomicon/nodex-login-mfa-duo/issues"
   },
   "license": "MIT",
   "licenses": [
@@ -22,16 +22,19 @@
     }
   ],
   "main": "./index.js",
+  "dependencies": {
+    "body-parser": "^1.15.2",
+    "duo_api": "git://github.com/duosecurity/duo_api_nodejs.git#7c523ec",
+    "duo_web": "^1.0.2",
+    "utils-merge": "^1.0.0"
+  },
   "devDependencies": {
     "make-node": "^0.3.0",
     "mocha": "^2.0.0",
-    "chai": "^3.0.0"
+    "chai": "^3.0.0",
+    "sinon": "^1.17.0"
   },
   "scripts": {
     "test": "node_modules/.bin/mocha test/*.test.js"
-  },
-  "dependencies": {
-    "body-parser": "^1.15.2",
-    "duo_web": "^1.0.2"
   }
 }

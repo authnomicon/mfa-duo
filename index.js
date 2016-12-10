@@ -1,4 +1,7 @@
 exports = module.exports = {
+  'client': require('./xom/client'),
+  'ds/credentials': require('./xom/ds/credentials'),
+  'id/map': require('./xom/id/map')
 };
 
 exports.load = function(id) {
