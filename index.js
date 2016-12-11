@@ -1,6 +1,7 @@
 exports = module.exports = {
   'client': require('./xom/client'),
   'challenge': require('./xom/challenge'),
+  'oob/verify': require('./xom/oob/verify'),
   'ds/credentials': require('./xom/ds/credentials'),
   'id/map': require('./xom/id/map')
 };

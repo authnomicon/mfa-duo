@@ -82,7 +82,7 @@ describe('duo/challenge', function() {
       
     }); // via out-of-band mechanism
     
-    describe('failure caused by bad request', function() {
+    describe('failure caused by bad request, missing required parameters', function() {
       var err, params;
       
       before(function() {
@@ -139,7 +139,7 @@ describe('duo/challenge', function() {
         expect(err.messageDetail).to.equal('factor');
       });
       
-    }); // failure caused by bad request
+    }); // failure caused by bad request, missing required parameters
   
   }); // verify
   
