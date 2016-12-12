@@ -2,10 +2,10 @@
 
 var expect = require('chai').expect;
 var sinon = require('sinon');
-var factory = require('../xom/challenge');
+var factory = require('../../xom/otp/verify');
 
 
-describe('duo/challenge', function() {
+describe('duo/otp/verify', function() {
   
   it('should export factory function', function() {
     expect(factory).to.be.a('function');
@@ -13,25 +13,27 @@ describe('duo/challenge', function() {
   
   it('should be annotated', function() {
     expect(factory['@implements']).to.have.length(2);
-    expect(factory['@implements'][0]).to.equal('http://schemas.authnomicon.org/js/login/mfa/challenge');
-    expect(factory['@implements'][1]).to.equal('http://schemas.authnomicon.org/js/login/mfa/opt/duo/challenge');
+    expect(factory['@implements'][0]).to.equal('http://schemas.authnomicon.org/js/login/mfa/otp/verify');
+    expect(factory['@implements'][1]).to.equal('http://schemas.authnomicon.org/js/login/mfa/opt/duo/otp/verify');
     expect(factory['@singleton']).to.equal(true);
   });
   
-  describe('challenge', function() {
+  describe('verify', function() {
     var client = {
       jsonApiCall: function(){}
     };
     var idmap;
   
-  
-    describe('via unspecified method', function() {
-      var params;
+    
+    describe('a valid passcode', function() {
+      var ok;
       
       before(function() {
         var result = {
           response: {
-            txid: '0a0zz000-aaaa-0aa0-a000-00a0aaa00a0a'
+            result: 'allow',
+            status: 'allow',
+            status_msg: 'Success. Logging you in...'
           },
           stat: 'OK'
         };
@@ -45,10 +47,10 @@ describe('duo/challenge', function() {
       });
       
       before(function(done) {
-        var challenge = factory(idmap, client);
-        challenge({ id: '1', username: 'johndoe' }, 'XXXXXXXXXXX000X0XXXX', function(_err, _params) {
+        var verify = factory(idmap, client);
+        verify({ id: '1', username: 'johndoe' }, 'XXXXXXXXXXX000X0XXXX', '123456', function(_err, _ok) {
           if (_err) { return done(_err); }
-          params = _params;
+          ok = _ok;
           done();
         });
       });
@@ -69,27 +71,27 @@ describe('duo/challenge', function() {
         expect(call.args[1]).to.equal('/auth/v2/auth');
         expect(call.args[2]).to.deep.equal({
           username: 'johndoe',
-          device: 'XXXXXXXXXXX000X0XXXX',
-          async: '1',
-          factor: 'auto'
+          factor: 'passcode',
+          passcode: '123456'
         });
       });
       
-      it('should yield parameters', function() {
-        expect(params.type).to.equal('oob');
-        expect(params.txid).to.equal('0a0zz000-aaaa-0aa0-a000-00a0aaa00a0a');
+      it('should yield ok', function() {
+        expect(ok).to.be.true;
       });
-    }); // via unspecified method
+    }); // a valid token
     
-    describe('failure caused by bad request, missing required parameters', function() {
-      var err, params;
+    describe('an invalid passcode', function() {
+      var ok;
       
       before(function() {
         var result = {
-          code: 40001,
-          message: 'Missing required request parameters',
-          message_detail: 'factor',
-          stat: 'FAIL'
+          response: {
+            result: 'deny',
+            status: 'deny',
+            status_msg: 'Incorrect passcode. Please try again.'
+          },
+          stat: 'OK'
         };
         
         sinon.stub(client, 'jsonApiCall').yields(result);
@@ -101,10 +103,10 @@ describe('duo/challenge', function() {
       });
       
       before(function(done) {
-        var challenge = factory(idmap, client);
-        challenge({ id: '1', username: 'johndoe' }, 'XXXXXXXXXXX000X0XXXX', function(_err, _params) {
-          err = _err;
-          params = _params;
+        var verify = factory(idmap, client);
+        verify({ id: '1', username: 'johndoe' }, 'XXXXXXXXXXX000X0XXXX', '123456', function(_err, _ok) {
+          if (_err) { return done(_err); }
+          ok = _ok;
           done();
         });
       });
@@ -125,19 +127,16 @@ describe('duo/challenge', function() {
         expect(call.args[1]).to.equal('/auth/v2/auth');
         expect(call.args[2]).to.deep.equal({
           username: 'johndoe',
-          device: 'XXXXXXXXXXX000X0XXXX',
-          async: '1',
-          factor: 'auto'
+          factor: 'passcode',
+          passcode: '123456'
         });
       });
       
-      it('should yield error', function() {
-        expect(err).to.be.an.instanceOf(Error);
-        expect(err.message).to.equal('Missing required request parameters');
-        expect(err.code).to.equal(40001);
-        expect(err.messageDetail).to.equal('factor');
+      it('should yield ok', function() {
+        expect(ok).to.be.false;
       });
-    }); // failure caused by bad request, missing required parameters
+      
+    }); // an invalid token
   
   }); // verify
   
