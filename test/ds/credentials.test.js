@@ -95,7 +95,7 @@ describe('duo/ds/credentials', function() {
           });
         });
         
-      }); // user with app installed on two iPhones
+      }); // user with app installed on iPhone
       
     }); // #list
     
