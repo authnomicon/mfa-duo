@@ -5,7 +5,7 @@ var sinon = require('sinon');
 var factory = require('../../lib/oob/verify');
 
 
-describe('duo/oob/verify', function() {
+describe('oob/verify', function() {
   
   it('should export factory function', function() {
     expect(factory).to.be.a('function');

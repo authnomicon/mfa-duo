@@ -13,8 +13,8 @@ describe('duo/ds/credentials', function() {
   
   it('should be annotated', function() {
     expect(factory['@implements']).to.have.length(2);
-    expect(factory['@implements'][0]).to.equal('http://schemas.authnomicon.org/js/login/mfa/CredentialDirectory');
-    expect(factory['@implements'][1]).to.equal('http://schemas.authnomicon.org/js/login/mfa/opt/duo/CredentialDirectory');
+    expect(factory['@implements'][0]).to.equal('http://schemas.authnomicon.org/js/login/mfa/UserAuthenticatorsDirectory');
+    expect(factory['@implements'][1]).to.equal('http://schemas.authnomicon.org/js/login/mfa/opt/duo/UserAuthenticatorsDirectory');
     expect(factory['@singleton']).to.equal(true);
   });
   
@@ -67,7 +67,7 @@ describe('duo/ds/credentials', function() {
           });
         });
       
-        it('should call id.map', function() {
+        it('should map user identifier', function() {
           expect(idmap).to.have.been.calledOnce;
           var call = idmap.getCall(0);
           expect(call.args[0]).to.deep.equal({
@@ -76,7 +76,7 @@ describe('duo/ds/credentials', function() {
           });
         });
         
-        it('should call client#jsonApiCall', function() {
+        it('should request authentication factors from Auth API', function() {
           expect(client.jsonApiCall).to.have.been.calledOnce;
           var call = client.jsonApiCall.getCall(0);
           expect(call.args[0]).to.equal('POST');
@@ -86,7 +86,7 @@ describe('duo/ds/credentials', function() {
           });
         });
         
-        it('should yield credentials', function() {
+        it('should yield authenticators', function() {
           expect(credentials).to.be.an('array');
           expect(credentials).to.have.length(1);
           expect(credentials[0]).to.deep.equal({

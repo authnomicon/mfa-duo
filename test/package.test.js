@@ -12,7 +12,7 @@ describe('nodex-login-mfa-duo', function() {
     expect(pkg['ds/users/authenticators']).to.be.a('function');
   });
   
-  describe('duo/client', function() {
+  describe('client', function() {
     var client = pkg['client'];
     
     it('should be annotated', function() {
@@ -21,13 +21,13 @@ describe('nodex-login-mfa-duo', function() {
     });
   });
   
-  describe('duo/ds/users/authenticators', function() {
+  describe('ds/users/authenticators', function() {
     var rsg = pkg['ds/users/authenticators'];
     
     it('should be annotated', function() {
       expect(rsg['@implements']).to.have.length(2);
-      expect(rsg['@implements'][0]).to.equal('http://schemas.authnomicon.org/js/login/mfa/CredentialDirectory');
-      expect(rsg['@implements'][1]).to.equal('http://schemas.authnomicon.org/js/login/mfa/opt/duo/CredentialDirectory');
+      expect(rsg['@implements'][0]).to.equal('http://schemas.authnomicon.org/js/login/mfa/UserAuthenticatorsDirectory');
+      expect(rsg['@implements'][1]).to.equal('http://schemas.authnomicon.org/js/login/mfa/opt/duo/UserAuthenticatorsDirectory');
       expect(rsg['@singleton']).to.equal(true);
     });
   });

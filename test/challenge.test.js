@@ -5,7 +5,7 @@ var sinon = require('sinon');
 var factory = require('../lib/challenge');
 
 
-describe('duo/challenge', function() {
+describe('challenge', function() {
   
   it('should export factory function', function() {
     expect(factory).to.be.a('function');
