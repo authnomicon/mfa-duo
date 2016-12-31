@@ -1,6 +1,6 @@
 exports = module.exports = function(idmap, client) {
   // Load modules.
-  var Directory = require('../../lib/creds/directory');
+  var Directory = require('../../../lib/creds/directory');
   
   var directory = new Directory(client, idmap);
   return directory;

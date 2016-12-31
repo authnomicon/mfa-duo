@@ -3,7 +3,7 @@ exports = module.exports = {
   'challenge': require('./xom/challenge'),
   'otp/verify': require('./xom/otp/verify'),
   'oob/verify': require('./xom/oob/verify'),
-  'ds/credentials': require('./xom/ds/credentials'),
+  'ds/users/authenticators': require('./xom/ds/users/authenticators'),
   'id/map': require('./xom/id/map')
 };
 

@@ -9,7 +9,7 @@ describe('nodex-login-mfa-duo', function() {
   it('should export manifest', function() {
     expect(pkg).to.be.an('object');
     expect(pkg['client']).to.be.a('function');
-    expect(pkg['ds/credentials']).to.be.a('function');
+    expect(pkg['ds/users/authenticators']).to.be.a('function');
   });
   
   describe('duo/client', function() {
@@ -21,8 +21,8 @@ describe('nodex-login-mfa-duo', function() {
     });
   });
   
-  describe('duo/ds/credentials', function() {
-    var rsg = pkg['ds/credentials'];
+  describe('duo/ds/users/authenticators', function() {
+    var rsg = pkg['ds/users/authenticators'];
     
     it('should be annotated', function() {
       expect(rsg['@implements']).to.have.length(2);
