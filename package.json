@@ -21,7 +21,7 @@
       "url": "http://opensource.org/licenses/MIT"
     }
   ],
-  "main": "./index.js",
+  "main": "./lib",
   "dependencies": {
     "body-parser": "^1.15.2",
     "duo_api": "git://github.com/duosecurity/duo_api_nodejs.git#7c523ec",
