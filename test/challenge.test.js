@@ -22,10 +22,9 @@ describe('challenge', function() {
     var client = {
       jsonApiCall: function(){}
     };
-    var idmap;
   
   
-    describe('via unspecified method', function() {
+    describe('a typical authenticator', function() {
       var params;
       
       before(function() {
@@ -37,7 +36,6 @@ describe('challenge', function() {
         };
         
         sinon.stub(client, 'jsonApiCall').yields(result);
-        idmap = sinon.stub().yields(null, { username: 'johndoe' });
       });
     
       after(function() {
@@ -45,20 +43,18 @@ describe('challenge', function() {
       });
       
       before(function(done) {
-        var challenge = factory(idmap, client);
-        challenge({ id: '1', username: 'johndoe' }, 'XXXXXXXXXXX000X0XXXX', function(_err, _params) {
+        var challenge = factory(client);
+        var authenticator = {
+          id: 'XXXXXXXXXXX000X0XXXX',
+          type: [ 'oob', 'otp' ],
+          _id: 'XXXXXXXXXXX000X0XXXX',
+          _user: { username: 'johndoe' }
+        }
+        
+        challenge(authenticator, function(_err, _params) {
           if (_err) { return done(_err); }
           params = _params;
           done();
-        });
-      });
-    
-      it('should call id.map', function() {
-        expect(idmap).to.have.been.calledOnce;
-        var call = idmap.getCall(0);
-        expect(call.args[0]).to.deep.equal({
-          id: '1',
-          username: 'johndoe'
         });
       });
     
@@ -79,7 +75,7 @@ describe('challenge', function() {
         expect(params.type).to.equal('oob');
         expect(params.transactionID).to.equal('0a0zz000-aaaa-0aa0-a000-00a0aaa00a0a');
       });
-    }); // via unspecified method
+    }); // a typical authenticator
     
     describe('failure caused by bad request, missing required parameters', function() {
       var err, params;
@@ -93,7 +89,6 @@ describe('challenge', function() {
         };
         
         sinon.stub(client, 'jsonApiCall').yields(result);
-        idmap = sinon.stub().yields(null, { username: 'johndoe' });
       });
     
       after(function() {
@@ -101,20 +96,18 @@ describe('challenge', function() {
       });
       
       before(function(done) {
-        var challenge = factory(idmap, client);
-        challenge({ id: '1', username: 'johndoe' }, 'XXXXXXXXXXX000X0XXXX', function(_err, _params) {
+        var challenge = factory(client);
+        var authenticator = {
+          id: 'XXXXXXXXXXX000X0XXXX',
+          type: [ 'oob', 'otp' ],
+          _id: 'XXXXXXXXXXX000X0XXXX',
+          _user: { username: 'johndoe' }
+        }
+        
+        challenge(authenticator, function(_err, _params) {
           err = _err;
           params = _params;
           done();
-        });
-      });
-    
-      it('should call id.map', function() {
-        expect(idmap).to.have.been.calledOnce;
-        var call = idmap.getCall(0);
-        expect(call.args[0]).to.deep.equal({
-          id: '1',
-          username: 'johndoe'
         });
       });
     
