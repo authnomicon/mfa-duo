@@ -46,7 +46,19 @@ describe('oob/verify', function() {
       
       before(function(done) {
         var verify = factory(client);
-        verify({ id: '1', username: 'johndoe' }, 'XXXXXXXXXXX000X0XXXX', '0a0zz000-aaaa-0aa0-a000-00a0aaa00a0a', function(_err, _ok, _params) {
+        var authenticator = {
+          id: 'XXXXXXXXXXX000X0XXXX',
+          type: [ 'oob', 'otp' ],
+          _id: 'XXXXXXXXXXX000X0XXXX',
+          _user: { username: 'johndoe' }
+        }
+        var opts = {
+          context: {
+            transactionID: '0a0zz000-aaaa-0aa0-a000-00a0aaa00a0a'
+          }
+        }
+        
+        verify(authenticator, '0a0zz000-aaaa-0aa0-a000-00a0aaa00a0a', opts, function(_err, _ok, _params) {
           if (_err) { return done(_err); }
           ok = _ok;
           params = _params;
@@ -91,7 +103,19 @@ describe('oob/verify', function() {
       
       before(function(done) {
         var verify = factory(client);
-        verify({ id: '1', username: 'johndoe' }, 'XXXXXXXXXXX000X0XXXX', '0a0zz000-aaaa-0aa0-a000-00a0aaa00a0a', function(_err, _ok, _params) {
+        var authenticator = {
+          id: 'XXXXXXXXXXX000X0XXXX',
+          type: [ 'oob', 'otp' ],
+          _id: 'XXXXXXXXXXX000X0XXXX',
+          _user: { username: 'johndoe' }
+        }
+        var opts = {
+          context: {
+            transactionID: '0a0zz000-aaaa-0aa0-a000-00a0aaa00a0a'
+          }
+        }
+        
+        verify(authenticator, '0a0zz000-aaaa-0aa0-a000-00a0aaa00a0a', opts, function(_err, _ok, _params) {
           if (_err) { return done(_err); }
           ok = _ok;
           params = _params;
@@ -136,7 +160,19 @@ describe('oob/verify', function() {
       
       before(function(done) {
         var verify = factory(client);
-        verify({ id: '1', username: 'johndoe' }, 'XXXXXXXXXXX000X0XXXX', '0a0zz000-aaaa-0aa0-a000-00a0aaa00a0a', function(_err, _ok, _params) {
+        var authenticator = {
+          id: 'XXXXXXXXXXX000X0XXXX',
+          type: [ 'oob', 'otp' ],
+          _id: 'XXXXXXXXXXX000X0XXXX',
+          _user: { username: 'johndoe' }
+        }
+        var opts = {
+          context: {
+            transactionID: '0a0zz000-aaaa-0aa0-a000-00a0aaa00a0a'
+          }
+        }
+        
+        verify(authenticator, '0a0zz000-aaaa-0aa0-a000-00a0aaa00a0a', opts, function(_err, _ok, _params) {
           if (_err) { return done(_err); }
           ok = _ok;
           params = _params;
@@ -174,7 +210,19 @@ describe('oob/verify', function() {
       
       before(function(done) {
         var verify = factory(client);
-        verify({ id: '1', username: 'johndoe' }, 'XXXXXXXXXXX000X0XXXX', '0a0zz000-aaaa-0aa0-a000-00a0aaa00a0a', function(_err, _ok) {
+        var authenticator = {
+          id: 'XXXXXXXXXXX000X0XXXX',
+          type: [ 'oob', 'otp' ],
+          _id: 'XXXXXXXXXXX000X0XXXX',
+          _user: { username: 'johndoe' }
+        }
+        var opts = {
+          context: {
+            transactionID: '0a0zz000-aaaa-0aa0-a000-00a0aaa00a0a'
+          }
+        }
+        
+        verify(authenticator, '0a0zz000-aaaa-0aa0-a000-00a0aaa00a0a', opts, function(_err, _ok) {
           err = _err;
           ok = _ok;
           done();
