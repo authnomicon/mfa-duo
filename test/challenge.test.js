@@ -77,7 +77,7 @@ describe('duo/challenge', function() {
       
       it('should yield parameters', function() {
         expect(params.type).to.equal('oob');
-        expect(params.txid).to.equal('0a0zz000-aaaa-0aa0-a000-00a0aaa00a0a');
+        expect(params.transactionID).to.equal('0a0zz000-aaaa-0aa0-a000-00a0aaa00a0a');
       });
     }); // via unspecified method
     
