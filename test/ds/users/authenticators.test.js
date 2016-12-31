@@ -2,7 +2,7 @@
 
 var expect = require('chai').expect;
 var sinon = require('sinon');
-var factory = require('../../../xom/ds/users/authenticators');
+var factory = require('../../../lib/ds/users/authenticators');
 
 
 describe('duo/ds/credentials', function() {

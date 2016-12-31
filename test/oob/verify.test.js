@@ -2,7 +2,7 @@
 
 var expect = require('chai').expect;
 var sinon = require('sinon');
-var factory = require('../../xom/oob/verify');
+var factory = require('../../lib/oob/verify');
 
 
 describe('duo/oob/verify', function() {
