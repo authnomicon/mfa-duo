@@ -25,7 +25,7 @@ describe('challenge', function() {
   
   
     describe('a typical authenticator', function() {
-      var params;
+      var params, context;
       
       before(function() {
         var result = {
@@ -51,14 +51,15 @@ describe('challenge', function() {
           _user: { username: 'johndoe' }
         }
         
-        challenge(authenticator, function(_err, _params) {
+        challenge(authenticator, function(_err, _params, _context) {
           if (_err) { return done(_err); }
           params = _params;
+          context = _context;
           done();
         });
       });
     
-      it('should call client#jsonApiCall', function() {
+      it('should perform authentication via Auth API', function() {
         expect(client.jsonApiCall).to.have.been.calledOnce;
         var call = client.jsonApiCall.getCall(0);
         expect(call.args[0]).to.equal('POST');
@@ -73,7 +74,10 @@ describe('challenge', function() {
       
       it('should yield parameters', function() {
         expect(params.type).to.equal('oob');
-        expect(params.transactionID).to.equal('0a0zz000-aaaa-0aa0-a000-00a0aaa00a0a');
+      });
+      
+      it('should yield context', function() {
+        expect(context.transactionID).to.equal('0a0zz000-aaaa-0aa0-a000-00a0aaa00a0a');
       });
     }); // a typical authenticator
     
