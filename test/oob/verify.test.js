@@ -66,7 +66,7 @@ describe('oob/verify', function() {
         });
       });
     
-      it('should call client#jsonApiCall', function() {
+      it('should check status of authentication process via Auth API', function() {
         expect(client.jsonApiCall).to.have.been.calledOnce;
         var call = client.jsonApiCall.getCall(0);
         expect(call.args[0]).to.equal('GET');
@@ -123,7 +123,7 @@ describe('oob/verify', function() {
         });
       });
     
-      it('should call client#jsonApiCall', function() {
+      it('should check status of authentication process via Auth API', function() {
         expect(client.jsonApiCall).to.have.been.calledOnce;
         var call = client.jsonApiCall.getCall(0);
         expect(call.args[0]).to.equal('GET');
@@ -180,7 +180,7 @@ describe('oob/verify', function() {
         });
       });
     
-      it('should call client#jsonApiCall', function() {
+      it('should check status of authentication process via Auth API', function() {
         expect(client.jsonApiCall).to.have.been.calledOnce;
         var call = client.jsonApiCall.getCall(0);
         expect(call.args[0]).to.equal('GET');
