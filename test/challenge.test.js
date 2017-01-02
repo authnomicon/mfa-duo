@@ -195,6 +195,63 @@ describe('challenge', function() {
       });
     }); // an authenticator as out-of-band device via push notification service channel
     
+    describe('an authenticator as out-of-band device via telephone channel', function() {
+      var params, context;
+      
+      before(function() {
+        var result = {
+          response: {
+            txid: '0a0zz000-aaaa-0aa0-a000-00a0aaa00a0a'
+          },
+          stat: 'OK'
+        };
+        
+        sinon.stub(client, 'jsonApiCall').yields(result);
+      });
+    
+      after(function() {
+        client.jsonApiCall.restore();
+      });
+      
+      before(function(done) {
+        var challenge = factory(client);
+        var authenticator = {
+          id: 'XXXXXXXXXXX000X0XXXX',
+          type: [ 'oob', 'otp' ],
+          _id: 'XXXXXXXXXXX000X0XXXX',
+          _user: { username: 'johndoe' }
+        }
+        
+        challenge(authenticator, { type: 'oob', channel: 'tel' }, function(_err, _params, _context) {
+          if (_err) { return done(_err); }
+          params = _params;
+          context = _context;
+          done();
+        });
+      });
+    
+      it('should perform authentication via Auth API', function() {
+        expect(client.jsonApiCall).to.have.been.calledOnce;
+        var call = client.jsonApiCall.getCall(0);
+        expect(call.args[0]).to.equal('POST');
+        expect(call.args[1]).to.equal('/auth/v2/auth');
+        expect(call.args[2]).to.deep.equal({
+          username: 'johndoe',
+          device: 'XXXXXXXXXXX000X0XXXX',
+          async: '1',
+          factor: 'phone'
+        });
+      });
+      
+      it('should yield parameters', function() {
+        expect(params.type).to.equal('oob');
+      });
+      
+      it('should yield context', function() {
+        expect(context.transactionID).to.equal('0a0zz000-aaaa-0aa0-a000-00a0aaa00a0a');
+      });
+    }); // an authenticator as out-of-band device via telephone channel
+    
     describe('failure caused by bad request, missing required parameters', function() {
       var err, params;
       
