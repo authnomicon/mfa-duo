@@ -23,63 +23,6 @@ describe('oob/verify', function() {
       jsonApiCall: function(){}
     };
     
-  
-    describe('pending response to Duo Push', function() {
-      var ok, params;
-      
-      before(function() {
-        var result = {
-          response: {
-            result: 'waiting',
-            status: 'pushed',
-            status_msg: 'Pushed a login request to your device...'
-          },
-          stat: 'OK'
-        };
-        
-        sinon.stub(client, 'jsonApiCall').yields(result);
-      });
-    
-      after(function() {
-        client.jsonApiCall.restore();
-      });
-      
-      before(function(done) {
-        var verify = factory(client);
-        var authenticator = {
-          id: 'XXXXXXXXXXX000X0XXXX',
-          type: [ 'oob', 'otp' ],
-          _id: 'XXXXXXXXXXX000X0XXXX',
-          _user: { username: 'johndoe' }
-        }
-        var opts = {
-          context: {
-            transactionID: '0a0zz000-aaaa-0aa0-a000-00a0aaa00a0a'
-          }
-        }
-        
-        verify(authenticator, '0a0zz000-aaaa-0aa0-a000-00a0aaa00a0a', opts, function(_err, _ok, _params) {
-          if (_err) { return done(_err); }
-          ok = _ok;
-          params = _params;
-          done();
-        });
-      });
-    
-      it('should check status of authentication process via Auth API', function() {
-        expect(client.jsonApiCall).to.have.been.calledOnce;
-        var call = client.jsonApiCall.getCall(0);
-        expect(call.args[0]).to.equal('GET');
-        expect(call.args[1]).to.equal('/auth/v2/auth_status');
-        expect(call.args[2]).to.deep.equal({
-          txid: '0a0zz000-aaaa-0aa0-a000-00a0aaa00a0a'
-        });
-      });
-      
-      it('should yield indeterminate ok', function() {
-        expect(ok).to.be.undefined;
-      });
-    }); // pending response to Duo Push
     
     describe('approved response to Duo Push', function() {
       var ok, params;
@@ -194,6 +137,63 @@ describe('oob/verify', function() {
         expect(ok).to.be.false;
       });
     }); // denied response to Duo Push
+  
+    describe('pending response to Duo Push', function() {
+      var ok, params;
+      
+      before(function() {
+        var result = {
+          response: {
+            result: 'waiting',
+            status: 'pushed',
+            status_msg: 'Pushed a login request to your device...'
+          },
+          stat: 'OK'
+        };
+        
+        sinon.stub(client, 'jsonApiCall').yields(result);
+      });
+    
+      after(function() {
+        client.jsonApiCall.restore();
+      });
+      
+      before(function(done) {
+        var verify = factory(client);
+        var authenticator = {
+          id: 'XXXXXXXXXXX000X0XXXX',
+          type: [ 'oob', 'otp' ],
+          _id: 'XXXXXXXXXXX000X0XXXX',
+          _user: { username: 'johndoe' }
+        }
+        var opts = {
+          context: {
+            transactionID: '0a0zz000-aaaa-0aa0-a000-00a0aaa00a0a'
+          }
+        }
+        
+        verify(authenticator, '0a0zz000-aaaa-0aa0-a000-00a0aaa00a0a', opts, function(_err, _ok, _params) {
+          if (_err) { return done(_err); }
+          ok = _ok;
+          params = _params;
+          done();
+        });
+      });
+    
+      it('should check status of authentication process via Auth API', function() {
+        expect(client.jsonApiCall).to.have.been.calledOnce;
+        var call = client.jsonApiCall.getCall(0);
+        expect(call.args[0]).to.equal('GET');
+        expect(call.args[1]).to.equal('/auth/v2/auth_status');
+        expect(call.args[2]).to.deep.equal({
+          txid: '0a0zz000-aaaa-0aa0-a000-00a0aaa00a0a'
+        });
+      });
+      
+      it('should yield indeterminate ok', function() {
+        expect(ok).to.be.undefined;
+      });
+    }); // pending response to Duo Push
   
     describe('failure caused by bad request, method not allowed', function() {
       var err, ok;
