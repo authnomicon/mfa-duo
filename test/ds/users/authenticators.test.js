@@ -18,7 +18,7 @@ describe('duo/ds/credentials', function() {
     expect(factory['@singleton']).to.equal(true);
   });
   
-  describe('Directory', function() {
+  describe('UserAuthenticatorsDirectory', function() {
     var directory;
     
     var client = {
