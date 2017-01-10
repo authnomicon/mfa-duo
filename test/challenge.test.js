@@ -25,7 +25,7 @@ describe('challenge', function() {
   
   
     describe('a typical authenticator', function() {
-      var params, context;
+      var params;
       
       before(function() {
         var result = {
@@ -51,10 +51,9 @@ describe('challenge', function() {
           _user: { username: 'johndoe' }
         }
         
-        challenge(authenticator, function(_err, _params, _context) {
+        challenge(authenticator, function(_err, _params) {
           if (_err) { return done(_err); }
           params = _params;
-          context = _context;
           done();
         });
       });
@@ -74,15 +73,12 @@ describe('challenge', function() {
       
       it('should yield parameters', function() {
         expect(params.type).to.equal('oob');
-      });
-      
-      it('should yield context', function() {
-        expect(context.transactionID).to.equal('0a0zz000-aaaa-0aa0-a000-00a0aaa00a0a');
+        expect(params.transactionID).to.equal('0a0zz000-aaaa-0aa0-a000-00a0aaa00a0a');
       });
     }); // a typical authenticator
     
     describe('an authenticator as out-of-band device', function() {
-      var params, context;
+      var params;
       
       before(function() {
         var result = {
@@ -108,10 +104,9 @@ describe('challenge', function() {
           _user: { username: 'johndoe' }
         }
         
-        challenge(authenticator, { type: 'oob' }, function(_err, _params, _context) {
+        challenge(authenticator, { type: 'oob' }, function(_err, _params) {
           if (_err) { return done(_err); }
           params = _params;
-          context = _context;
           done();
         });
       });
@@ -131,15 +126,12 @@ describe('challenge', function() {
       
       it('should yield parameters', function() {
         expect(params.type).to.equal('oob');
-      });
-      
-      it('should yield context', function() {
-        expect(context.transactionID).to.equal('0a0zz000-aaaa-0aa0-a000-00a0aaa00a0a');
+        expect(params.transactionID).to.equal('0a0zz000-aaaa-0aa0-a000-00a0aaa00a0a');
       });
     }); // an authenticator as out-of-band device
     
     describe('an authenticator as out-of-band device via push notification service channel', function() {
-      var params, context;
+      var params;
       
       before(function() {
         var result = {
@@ -165,10 +157,9 @@ describe('challenge', function() {
           _user: { username: 'johndoe' }
         }
         
-        challenge(authenticator, { type: 'oob', channel: 'pns' }, function(_err, _params, _context) {
+        challenge(authenticator, { type: 'oob', channel: 'pns' }, function(_err, _params) {
           if (_err) { return done(_err); }
           params = _params;
-          context = _context;
           done();
         });
       });
@@ -188,15 +179,12 @@ describe('challenge', function() {
       
       it('should yield parameters', function() {
         expect(params.type).to.equal('oob');
-      });
-      
-      it('should yield context', function() {
-        expect(context.transactionID).to.equal('0a0zz000-aaaa-0aa0-a000-00a0aaa00a0a');
+        expect(params.transactionID).to.equal('0a0zz000-aaaa-0aa0-a000-00a0aaa00a0a');
       });
     }); // an authenticator as out-of-band device via push notification service channel
     
     describe('an authenticator as out-of-band device via telephone channel', function() {
-      var params, context;
+      var params;
       
       before(function() {
         var result = {
@@ -222,10 +210,9 @@ describe('challenge', function() {
           _user: { username: 'johndoe' }
         }
         
-        challenge(authenticator, { type: 'oob', channel: 'tel' }, function(_err, _params, _context) {
+        challenge(authenticator, { type: 'oob', channel: 'tel' }, function(_err, _params) {
           if (_err) { return done(_err); }
           params = _params;
-          context = _context;
           done();
         });
       });
@@ -245,10 +232,7 @@ describe('challenge', function() {
       
       it('should yield parameters', function() {
         expect(params.type).to.equal('oob');
-      });
-      
-      it('should yield context', function() {
-        expect(context.transactionID).to.equal('0a0zz000-aaaa-0aa0-a000-00a0aaa00a0a');
+        expect(params.transactionID).to.equal('0a0zz000-aaaa-0aa0-a000-00a0aaa00a0a');
       });
     }); // an authenticator as out-of-band device via telephone channel
     
