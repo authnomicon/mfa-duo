@@ -1,5 +1,5 @@
 {
-  "name": "nodex-login-mfa-duo",
+  "name": "@authnomicon/mfa-duo",
   "version": "0.0.0",
   "description": "",
   "author": {
