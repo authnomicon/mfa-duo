@@ -28,6 +28,7 @@
       "client",
       "challenge",
       "register",
+      "confirm",
       "lookup/verify",
       "otp/verify",
       "oob/verify",

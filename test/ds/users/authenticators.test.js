@@ -99,6 +99,75 @@ describe('duo/ds/credentials', function() {
         
       }); // user with app installed on iPhone
       
+      describe('user with app installed on iPhone, push only', function() {
+        var credentials;
+        
+        before(function() {
+          var record = {
+            response: {
+              devices: [{
+                capabilities: [ 'auto', 'push', 'mobile_otp' ],
+                device: 'XX00X0XXX0X0X0X0000X',
+                display_name: 'iOS',
+                name: '',
+                number: '',
+                type: 'phone'
+              }],
+              result: 'auth',
+              status_msg: 'Account is active'
+            },
+            stat: 'OK'
+          };
+          
+          sinon.stub(client, 'jsonApiCall').yields(record);
+          idmap = sinon.stub().yields(null, { username: 'johndoe' });
+        });
+      
+        after(function() {
+          client.jsonApiCall.restore();
+        });
+        
+        before(function(done) {
+          var directory = factory(idmap, client);
+          directory.list({ id: '1', username: 'johndoe' }, function(_err, _credentials) {
+            if (_err) { return done(_err); }
+            credentials = _credentials;
+            done();
+          });
+        });
+      
+        it('should map user identifier', function() {
+          expect(idmap).to.have.been.calledOnce;
+          var call = idmap.getCall(0);
+          expect(call.args[0]).to.deep.equal({
+            id: '1',
+            username: 'johndoe'
+          });
+        });
+        
+        it('should request authentication factors from Auth API', function() {
+          expect(client.jsonApiCall).to.have.been.calledOnce;
+          var call = client.jsonApiCall.getCall(0);
+          expect(call.args[0]).to.equal('POST');
+          expect(call.args[1]).to.equal('/auth/v2/preauth');
+          expect(call.args[2]).to.deep.equal({
+            username: 'johndoe'
+          });
+        });
+        
+        it('should yield authenticators', function() {
+          expect(credentials).to.be.an('array');
+          expect(credentials).to.have.length(1);
+          expect(credentials[0]).to.deep.equal({
+            id: 'XX00X0XXX0X0X0X0000X',
+            type: [ 'oob', 'otp', 'lookup-secret' ],
+            _id: 'XX00X0XXX0X0X0X0000X',
+            _user: { username: 'johndoe' }
+          });
+        });
+        
+      }); // user with app installed on iPhone, push only
+      
       describe('user that needs to enroll', function() {
         var credentials;
         

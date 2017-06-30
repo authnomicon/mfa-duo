@@ -11,7 +11,7 @@ describe('nodex-login-mfa-duo', function() {
     it('should have assembly metadata', function() {
       expect(json.assembly.namespace).to.equal('mfa/duo');
       
-      expect(json.assembly.components).to.have.length(10);
+      expect(json.assembly.components).to.have.length(11);
       expect(json.assembly.components).to.include('oob/verify');
     });
   });
