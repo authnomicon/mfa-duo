@@ -11,10 +11,63 @@ describe('register', function() {
     expect(factory).to.be.a('function');
   });
   
-  describe('challenge', function() {
+  describe.skip('register', function() {
     var client = {
       jsonApiCall: function(){}
     };
+    
+    
+    describe('a typical authenticator', function() {
+      var params;
+      
+      before(function() {
+        var result = {
+          response: {
+            activation_barcode: 'https://api-x0xxxx00.duosecurity.com/frame/qr?value=duo%3A%2F%2F0x0xXx0XXXXxxXXX00xX-XXXxXXXxXxXxXXX0XxX0x0XxX0XxxXX0XxXxxX',
+            activation_code: 'duo://0x0xXx0XXXXxxXXX00xX-XXXxXXXxXxXxXXX0XxX0x0XxX0XxxXX0XxXxxX',
+            activation_url: 'https://m-x0xxxx00.duosecurity.com/activate/0x0xXx0XXXXxxXXX00xX',
+            expiration: 1498931123,
+            user_id: 'XXXXX00XXXXXX00XXX0X',
+            username: '000xx0x00xx0x00000x00x00xx0x00x0'
+          },
+          stat: 'OK'
+        };
+        
+        sinon.stub(client, 'jsonApiCall').yields(result);
+      });
+    
+      after(function() {
+        client.jsonApiCall.restore();
+      });
+      
+      before(function(done) {
+        var register = factory(client);
+        
+        register(function(_err, _params) {
+          if (_err) { return done(_err); }
+          params = _params;
+          done();
+        });
+      });
+    
+      it('should perform authentication via Auth API', function() {
+        expect(client.jsonApiCall).to.have.been.calledOnce;
+        var call = client.jsonApiCall.getCall(0);
+        expect(call.args[0]).to.equal('POST');
+        expect(call.args[1]).to.equal('/auth/v2/auth');
+        expect(call.args[2]).to.deep.equal({
+          username: 'johndoe',
+          device: 'XXXXXXXXXXX000X0XXXX',
+          async: '1',
+          factor: 'auto'
+        });
+      });
+      
+      it('should yield parameters', function() {
+        expect(params.type).to.equal('oob');
+        expect(params.transactionID).to.equal('0a0zz000-aaaa-0aa0-a000-00a0aaa00a0a');
+      });
+    }); // a typical authenticator
     
     
     describe('failure caused by bad request, wrong integration type', function() {
