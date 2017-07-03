@@ -33,9 +33,7 @@
       "otp/verify",
       "oob/verify",
       "ds/users/authenticators",
-      "id/map",
-      "handlers/prompt",
-      "handlers/verify"
+      "id/map"
     ]
   },
   "dependencies": {
