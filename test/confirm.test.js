@@ -91,7 +91,7 @@ describe('confirm', function() {
       });
       
       it('should yield parameters', function() {
-        expect(params).to.equal(false);
+        expect(params).to.equal(undefined);
       });
     }); // a typical authenticator
     
