@@ -11,10 +11,11 @@ describe('register', function() {
     expect(factory).to.be.a('function');
   });
   
-  describe.skip('register', function() {
+  describe('register', function() {
     var client = {
       jsonApiCall: function(){}
     };
+    var idmap;
     
     
     describe('a typical authenticator', function() {
@@ -34,6 +35,7 @@ describe('register', function() {
         };
         
         sinon.stub(client, 'jsonApiCall').yields(result);
+        idmap = sinon.stub().yields(null, { username: 'johndoe' });
       });
     
       after(function() {
@@ -41,9 +43,9 @@ describe('register', function() {
       });
       
       before(function(done) {
-        var register = factory(client);
+        var register = factory(idmap, client);
         
-        register(function(_err, _params) {
+        register({ id: '1', username: 'johndoe' }, function(_err, _params) {
           if (_err) { return done(_err); }
           params = _params;
           done();
@@ -54,18 +56,22 @@ describe('register', function() {
         expect(client.jsonApiCall).to.have.been.calledOnce;
         var call = client.jsonApiCall.getCall(0);
         expect(call.args[0]).to.equal('POST');
-        expect(call.args[1]).to.equal('/auth/v2/auth');
-        expect(call.args[2]).to.deep.equal({
-          username: 'johndoe',
-          device: 'XXXXXXXXXXX000X0XXXX',
-          async: '1',
-          factor: 'auto'
-        });
+        expect(call.args[1]).to.equal('/auth/v2/enroll');
+        //expect(call.args[2]).to.deep.equal({
+        //  username: 'johndoe'
+        //});
       });
       
       it('should yield parameters', function() {
-        expect(params.type).to.equal('oob');
-        expect(params.transactionID).to.equal('0a0zz000-aaaa-0aa0-a000-00a0aaa00a0a');
+        expect(params).to.be.an('object');
+        expect(params).to.deep.equal({
+          type: 'oob',
+          barcodeURL: 'duo://0x0xXx0XXXXxxXXX00xX-XXXxXXXxXxXxXXX0XxX0x0XxX0XxxXX0XxXxxX',
+          context: {
+            user_id: 'XXXXX00XXXXXX00XXX0X',
+            activation_code: 'duo://0x0xXx0XXXXxxXXX00xX-XXXxXXXxXxXxXXX0XxX0x0XxX0XxxXX0XxXxxX'
+          }
+        });
       });
     }); // a typical authenticator
     
@@ -82,6 +88,7 @@ describe('register', function() {
         };
         
         sinon.stub(client, 'jsonApiCall').yields(result);
+        idmap = sinon.stub().yields(null, { username: 'johndoe' });
       });
     
       after(function() {
@@ -89,9 +96,9 @@ describe('register', function() {
       });
       
       before(function(done) {
-        var register = factory(client);
+        var register = factory(idmap, client);
         
-        register(function(_err, _params) {
+        register({ id: '1', username: 'johndoe' }, function(_err, _params) {
           err = _err;
           params = _params;
           done();
@@ -103,7 +110,7 @@ describe('register', function() {
         var call = client.jsonApiCall.getCall(0);
         expect(call.args[0]).to.equal('POST');
         expect(call.args[1]).to.equal('/auth/v2/enroll');
-        expect(call.args[2]).to.deep.equal({});
+        //expect(call.args[2]).to.deep.equal({ username: 'johndoe' });
       });
       
       it('should yield error', function() {

@@ -33,7 +33,7 @@ describe('confirm', function() {
       before(function(done) {
         var confirm = factory(client);
         
-        confirm({ userID: 'XXXXX00XXXXXX00XXX0X', code: 'duo://0x0xXx0XXXXxxXXX00xX-XXXxXXXxXxXxXXX0XxX0x0XxX0XxxXX0XxXxxX' }, function(_err, _params) {
+        confirm({ user_id: 'XXXXX00XXXXXX00XXX0X', activation_code: 'duo://0x0xXx0XXXXxxXXX00xX-XXXxXXXxXxXxXXX0XxX0x0XxX0XxxXX0XxXxxX' }, function(_err, _params) {
           if (_err) { return done(_err); }
           params = _params;
           done();
@@ -72,7 +72,7 @@ describe('confirm', function() {
       before(function(done) {
         var confirm = factory(client);
         
-        confirm({ userID: 'XXXXX00XXXXXX00XXX0X', code: 'duo://0x0xXx0XXXXxxXXX00xX-XXXxXXXxXxXxXXX0XxX0x0XxX0XxxXX0XxXxxX' }, function(_err, _params) {
+        confirm({ user_id: 'XXXXX00XXXXXX00XXX0X', activation_code: 'duo://0x0xXx0XXXXxxXXX00xX-XXXxXXXxXxXxXXX0XxX0x0XxX0XxxXX0XxXxxX' }, function(_err, _params) {
           if (_err) { return done(_err); }
           params = _params;
           done();
