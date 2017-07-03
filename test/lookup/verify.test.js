@@ -2,7 +2,7 @@
 
 var expect = require('chai').expect;
 var sinon = require('sinon');
-var factory = require('../../lib/lookup/verify');
+var factory = require('../../app/lookup/verify');
 
 
 describe('lookup/verify', function() {

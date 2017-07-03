@@ -2,7 +2,7 @@
 
 var expect = require('chai').expect;
 var sinon = require('sinon');
-var factory = require('../lib/challenge');
+var factory = require('../app/challenge');
 
 
 describe('challenge', function() {
