@@ -67,10 +67,8 @@ describe('register', function() {
         expect(params).to.deep.equal({
           type: 'oob',
           barcodeURL: 'duo://0x0xXx0XXXXxxXXX00xX-XXXxXXXxXxXxXXX0XxX0x0XxX0XxxXX0XxXxxX',
-          context: {
-            user_id: 'XXXXX00XXXXXX00XXX0X',
-            activation_code: 'duo://0x0xXx0XXXXxxXXX00xX-XXXxXXXxXxXxXXX0XxX0x0XxX0XxxXX0XxXxxX'
-          }
+          providedID: 'XXXXX00XXXXXX00XXX0X',
+          transactionID: 'duo://0x0xXx0XXXXxxXXX00xX-XXXxXXXxXxXxXXX0XxX0x0XxX0XxxXX0XxXxxX'
         });
       });
     }); // a typical authenticator

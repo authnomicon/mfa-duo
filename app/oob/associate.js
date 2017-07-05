@@ -26,10 +26,8 @@ exports = module.exports = function(idmap, client) {
         var params = {
           type: 'oob',
           barcodeURL: data.response.activation_code,
-          context: {
-            user_id: data.response.user_id,
-            activation_code: data.response.activation_code
-          }
+          providedID: data.response.user_id,
+          transactionID: data.response.activation_code
         }
         return cb(null, params);
       });
