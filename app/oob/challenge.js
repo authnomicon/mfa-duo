@@ -86,11 +86,6 @@ exports = module.exports = function(client) {
   };
 };
 
-exports['@implements'] = [
-  'http://schemas.authnomicon.org/js/login/mfa/challenge',
-  'http://schemas.authnomicon.org/js/login/mfa/opt/duo/challenge'
-];
-exports['@singleton'] = true;
 exports['@require'] = [
   'http://schemas.authnomicon.org/js/login/mfa/opt/duo/Client'
 ];

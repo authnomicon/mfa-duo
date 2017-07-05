@@ -26,12 +26,10 @@
     "namespace": "mfa/duo",
     "components": [
       "client",
-      "oob/challenge",
-      "oob/associate",
+      "oob/channel",
       "confirm",
       "lookup/verify",
       "otp/verify",
-      "oob/verify",
       "ds/users/authenticators",
       "id/map"
     ]

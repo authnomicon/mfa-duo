@@ -37,12 +37,7 @@ exports = module.exports = function(idmap, client) {
   };
 };
 
-exports['@implements'] = [
-  'http://schemas.authnomicon.org/js/login/mfa/associate',
-  'http://schemas.authnomicon.org/js/login/mfa/opt/duo/associate'
-];
-exports['@singleton'] = true;
 exports['@require'] = [
-  './id/map',
+  '../id/map',
   'http://schemas.authnomicon.org/js/login/mfa/opt/duo/Client'
 ];
