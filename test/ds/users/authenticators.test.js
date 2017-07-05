@@ -91,6 +91,7 @@ describe('duo/ds/credentials', function() {
           expect(credentials).to.have.length(1);
           expect(credentials[0]).to.deep.equal({
             id: 'XXXXXXXXXXX000X0XXXX',
+            vendor: 'duo',
             type: [ 'oob', 'otp', 'lookup-secret' ],
             _id: 'XXXXXXXXXXX000X0XXXX',
             _user: { username: 'johndoe' }
@@ -160,6 +161,7 @@ describe('duo/ds/credentials', function() {
           expect(credentials).to.have.length(1);
           expect(credentials[0]).to.deep.equal({
             id: 'XX00X0XXX0X0X0X0000X',
+            vendor: 'duo',
             type: [ 'oob', 'otp', 'lookup-secret' ],
             _id: 'XX00X0XXX0X0X0X0000X',
             _user: { username: 'johndoe' }

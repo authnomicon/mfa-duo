@@ -37,6 +37,7 @@ UserAuthenticatorsDirectory.prototype.list = function(user, options, cb) {
       for (i = 0, len = devices.length; i < len; ++i) {
         device = devices[i];
         authenticator = {};
+        authenticator.vendor = 'duo';
         authenticator.id = device.device;
         authenticator.type = [];
         //authenticator.keys = [];
@@ -60,6 +61,7 @@ UserAuthenticatorsDirectory.prototype.list = function(user, options, cb) {
           */
         }
         authenticator.type.push('lookup-secret');
+        
         authenticator._id = device.device;
         authenticator._user = idparams;
         
