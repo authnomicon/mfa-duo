@@ -27,7 +27,7 @@
     "components": [
       "client",
       "challenge",
-      "register",
+      "oob/associate",
       "confirm",
       "lookup/verify",
       "otp/verify",

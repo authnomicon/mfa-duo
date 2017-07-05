@@ -1,6 +1,6 @@
 var qs = require('qs');
 var merge = require('utils-merge');
-var DuoAuthAPIError = require('../lib/errors/duoauthapierror');
+var DuoAuthAPIError = require('../../lib/errors/duoauthapierror');
 
 
 exports = module.exports = function(idmap, client) {

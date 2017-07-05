@@ -2,7 +2,7 @@
 
 var expect = require('chai').expect;
 var sinon = require('sinon');
-var factory = require('../app/register');
+var factory = require('../../app/oob/associate');
 
 
 describe('register', function() {
