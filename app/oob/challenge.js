@@ -81,7 +81,7 @@ exports = module.exports = function(client) {
       console.log('CHALLENGE DUO');
       console.log(data);
       
-      return cb(null, { type: 'oob', transactionID: data.response.txid });
+      return cb(null, data.response.txid);
     });
   };
 };
